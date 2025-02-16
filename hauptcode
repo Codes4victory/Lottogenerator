@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottozahlen-Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { margin: 10px; padding: 10px; }
+        #zahlen { font-size: 24px; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Dein persönlicher Lottozahlen-Generator</h1>
+    <p>Basierend auf deinem Namen und Geburtsdatum</p>
+    
+    <label for="name">Dein Name:</label>
+    <input type="text" id="name" placeholder="Max Mustermann">
+    
+    <label for="geburtstag">Geburtsdatum:</label>
+    <input type="date" id="geburtstag">
+    
+    <button onclick="generiereZahlen()">Lottozahlen generieren</button>
+    
+    <div id="zahlen"></div>
+    
+    <script>
+        function generiereZahlen() {
+            let name = document.getElementById('name').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+            
+            if (!name || !geburtstag) {
+                alert("Bitte gib deinen Namen und dein Geburtsdatum ein!");
+                return;
+            }
+            
+            let seed = name.length + new Date(geburtstag).getTime();
+            let zahlen = [];
+            
+            for (let i = 0; i < 6; i++) {
+                let zahl = (Math.abs(Math.sin(seed + i) * 49) + 1) | 0;
+                if (!zahlen.includes(zahl)) {
+                    zahlen.push(zahl);
+                } else {
+                    i--; 
+                }
+            }
+            
+            document.getElementById('zahlen').innerText = "Deine Lottozahlen: " + zahlen.join(' - ');
+        }
+    </script>
+</body>
+</html>
