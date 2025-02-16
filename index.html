@@ -24,23 +24,33 @@
             font-weight: bold;
             padding: 15px 20px;
             border-radius: 5px;
+            transition: transform 0.2s, background-color 0.3s;
         }
         button:hover {
             background-color: #ff9900;
+            transform: scale(1.1);
         }
         #zahlen {
             font-size: 24px;
             margin-top: 20px;
             font-weight: bold;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s, transform 1s;
         }
         .kleeblatt {
             color: red;
             font-size: 40px;
+            animation: pulse 1.5s infinite alternate;
         }
         .disclaimer {
             margin-top: 30px;
             font-size: 14px;
             color: red;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
         }
     </style>
 </head>
@@ -103,11 +113,14 @@
             }
             zahlen.sort((a, b) => a - b);
             
-            document.getElementById('zahlen').innerHTML = `
+            let zahlenDiv = document.getElementById('zahlen');
+            zahlenDiv.innerHTML = `
                 <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
                 <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
                 <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
             `;
+            zahlenDiv.style.opacity = '1';
+            zahlenDiv.style.transform = 'translateY(0)';
         }
     </script>
 </body>
