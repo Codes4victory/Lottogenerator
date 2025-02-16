@@ -79,7 +79,57 @@
     <button onclick="generiereZahlen()">Lottozahlen generieren</button>
     
     <div id="zahlen"></div>
-    
+    <div id="kalenderContainer">
+    <h2>📅 Lotto-Kalender 📅</h2>
+    <div id="kalender"></div>
+</div>
+
+<script>
+    function erstelleKalender(jahr, monat) {
+        let kalenderDiv = document.getElementById('kalender');
+        kalenderDiv.innerHTML = ''; 
+        let tageImMonat = new Date(jahr, monat + 1, 0).getDate();
+        let ersterTag = new Date(jahr, monat, 1).getDay();
+        
+        let table = document.createElement('table');
+        table.border = "1";
+        let headerRow = table.insertRow();
+        let tage = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+        
+        tage.forEach(tag => {
+            let th = document.createElement('th');
+            th.innerText = tag;
+            headerRow.appendChild(th);
+        });
+
+        let row = table.insertRow();
+        for (let i = 0; i < ersterTag; i++) {
+            row.insertCell();
+        }
+
+        for (let tag = 1; tag <= tageImMonat; tag++) {
+            if (row.cells.length === 7) {
+                row = table.insertRow();
+            }
+
+            let cell = row.insertCell();
+            cell.innerText = tag;
+            let aktuellesDatum = new Date(jahr, monat, tag);
+            
+            if (aktuellesDatum.getDay() === 3 || aktuellesDatum.getDay() === 6) {
+                cell.style.backgroundColor = "#ffcc00"; 
+                cell.style.fontWeight = "bold";
+                cell.style.cursor = "pointer";
+            }
+        }
+
+        kalenderDiv.appendChild(table);
+    }
+
+    let heute = new Date();
+    erstelleKalender(heute.getFullYear(), heute.getMonth());
+</script>
+
     <div class="kleeblatt">🍀🍀🍀</div>
     
     <div class="disclaimer">
