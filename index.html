@@ -70,9 +70,6 @@
     <label for="zieherGeburt">Geburtsdatum der Zieherin:</label>
     <input type="date" id="zieherGeburt">
 
-    <label for="ort">Ort der Ziehung:</label>
-    <input type="text" id="ort" placeholder="Berlin">
-
     <label for="zeit">Zeit der Ziehung:</label>
     <input type="time" id="zeit">
 
@@ -102,10 +99,9 @@
             let geburtstag = document.getElementById('geburtstag').value;
             let zieher = document.getElementById('zieher').value;
             let zieherGeburt = document.getElementById('zieherGeburt').value;
-            let ort = document.getElementById('ort').value;
             let zeit = document.getElementById('zeit').value;
 
-            if (!name || !geburtstag || !zieher || !zieherGeburt || !ort || !zeit) {
+            if (!name || !geburtstag || !zieher || !zieherGeburt || !zeit) {
                 alert("Bitte fülle alle Felder aus!");
                 return;
             }
@@ -123,7 +119,7 @@
 
             let zahlenDiv = document.getElementById('zahlen');
             zahlenDiv.innerHTML = `
-                <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
+                <p><strong>Ziehung in:</strong> Studio des Saarländischen Rundfunks, Franz-Mai-Straße, Funkhaus Halberg, 66100 Saarbrücken um ${zeit}</p>
                 <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
                 <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
             `;
