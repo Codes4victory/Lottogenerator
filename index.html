@@ -56,7 +56,7 @@
 </head>
 <body>
     <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
-    <p>Unser einzigartiger Lottozahlen-Generator kombiniert <strong>Kabbalistik, Numerologie und Astrologie</strong> für eine ganz persönliche Gewinnstrategie!</p>
+    <p>Unser einzigartiger Lottozahlen-Generator kombiniert <strong>Kabbalistik, Numerologie und Astrologie</strong> sowie <strong>Statistiken der letzten 5 Jahre</strong> für eine ganz persönliche Gewinnstrategie!</p>
     
     <label for="name">Dein Name:</label>
     <input type="text" id="name" placeholder="Max Mustermann">
@@ -85,6 +85,16 @@
     <div class="disclaimer">
         <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
     </div>
+    
+    <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
+    <p>Basierend auf deinem Namen, Geburtsort und Geburtsdatum berechnen wir das ideale Datum zum Lottospielen!</p>
+    
+    <label for="geburtsort">Geburtsort:</label>
+    <input type="text" id="geburtsort" placeholder="München">
+    
+    <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
+    
+    <div id="lottoDatum"></div>
     
     <script>
         function generiereZahlen() {
@@ -121,6 +131,23 @@
             `;
             zahlenDiv.style.opacity = '1';
             zahlenDiv.style.transform = 'translateY(0)';
+        }
+        
+        function generiereLottoDatum() {
+            let name = document.getElementById('name').value;
+            let geburtsort = document.getElementById('geburtsort').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+            
+            if (!name || !geburtsort || !geburtstag) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
+            }
+            
+            let seed = name.length + geburtsort.length + new Date(geburtstag).getTime();
+            let lottoDatum = new Date(2025, 0, 1);
+            lottoDatum.setDate(lottoDatum.getDate() + (seed % 365));
+            
+            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatum.toDateString()}</p>`;
         }
     </script>
 </body>
