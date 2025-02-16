@@ -136,20 +136,11 @@
         }
         
         function generiereLottoDatum() {
-            let name = document.getElementById('datumName').value;
-            let geburtstag = document.getElementById('datumGeburtstag').value;
-            let geburtsort = document.getElementById('geburtsort').value;
-            
-            if (!name || !geburtstag || !geburtsort) {
-                alert("Bitte fülle alle Felder aus!");
-                return;
+            let heute = new Date();
+            while (heute.getDay() !== 3 && heute.getDay() !== 6) {
+                heute.setDate(heute.getDate() + 1);
             }
-            
-            let seed = name.length + geburtsort.length + new Date(geburtstag).getTime();
-            let lottoDatum = new Date(2025, 0, 1);
-            lottoDatum.setDate(lottoDatum.getDate() + (seed % 365));
-            
-            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatum.toDateString()}</p>`;
+            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${heute.toDateString()}</p>`;
         }
     </script>
 </body>
