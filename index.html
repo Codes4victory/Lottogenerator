@@ -5,14 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magischer Lottozahlen-Generator</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        input, button { margin: 10px; padding: 10px; }
-        #zahlen { font-size: 24px; margin-top: 20px; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, #fff200, #ffffff);
+            color: #333;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ffcc00;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ff9900;
+        }
+        #zahlen {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .kleeblatt {
+            color: red;
+            font-size: 40px;
+        }
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: red;
+        }
     </style>
 </head>
 <body>
-    <h1>Magischer Lottozahlen-Generator</h1>
-    <p>Unser einzigartiger Lottozahlen-Generator kombiniert **Kabbalistik, Numerologie und Astrologie** für eine ganz persönliche Gewinnstrategie!</p>
+    <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
+    <p>Unser einzigartiger Lottozahlen-Generator kombiniert <strong>Kabbalistik, Numerologie und Astrologie</strong> für eine ganz persönliche Gewinnstrategie!</p>
     
     <label for="name">Dein Name:</label>
     <input type="text" id="name" placeholder="Max Mustermann">
@@ -35,6 +69,12 @@
     <button onclick="generiereZahlen()">Lottozahlen generieren</button>
     
     <div id="zahlen"></div>
+    
+    <div class="kleeblatt">🍀🍀🍀</div>
+    
+    <div class="disclaimer">
+        <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
+    </div>
     
     <script>
         function generiereZahlen() {
