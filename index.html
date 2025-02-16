@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lottozahlen-Generator</title>
+    <title>Magischer Lottozahlen-Generator</title>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         input, button { margin: 10px; padding: 10px; }
@@ -11,14 +11,26 @@
     </style>
 </head>
 <body>
-    <h1>Dein persönlicher Lottozahlen-Generator</h1>
-    <p>Basierend auf deinem Namen und Geburtsdatum</p>
+    <h1>Magischer Lottozahlen-Generator</h1>
+    <p>Unser einzigartiger Lottozahlen-Generator kombiniert **Kabbalistik, Numerologie und Astrologie** für eine ganz persönliche Gewinnstrategie!</p>
     
     <label for="name">Dein Name:</label>
     <input type="text" id="name" placeholder="Max Mustermann">
     
     <label for="geburtstag">Geburtsdatum:</label>
     <input type="date" id="geburtstag">
+    
+    <label for="zieher">Name der Zieherin:</label>
+    <input type="text" id="zieher" placeholder="Lisa Glücklich">
+    
+    <label for="zieherGeburt">Geburtsdatum der Zieherin:</label>
+    <input type="date" id="zieherGeburt">
+    
+    <label for="ort">Ort der Ziehung:</label>
+    <input type="text" id="ort" placeholder="Berlin">
+    
+    <label for="zeit">Zeit der Ziehung:</label>
+    <input type="time" id="zeit">
     
     <button onclick="generiereZahlen()">Lottozahlen generieren</button>
     
@@ -28,13 +40,17 @@
         function generiereZahlen() {
             let name = document.getElementById('name').value;
             let geburtstag = document.getElementById('geburtstag').value;
+            let zieher = document.getElementById('zieher').value;
+            let zieherGeburt = document.getElementById('zieherGeburt').value;
+            let ort = document.getElementById('ort').value;
+            let zeit = document.getElementById('zeit').value;
             
-            if (!name || !geburtstag) {
-                alert("Bitte gib deinen Namen und dein Geburtsdatum ein!");
+            if (!name || !geburtstag || !zieher || !zieherGeburt || !ort || !zeit) {
+                alert("Bitte fülle alle Felder aus!");
                 return;
             }
             
-            let seed = name.length + new Date(geburtstag).getTime();
+            let seed = name.length + new Date(geburtstag).getTime() + zieher.length + new Date(zieherGeburt).getTime();
             let zahlen = [];
             
             for (let i = 0; i < 6; i++) {
@@ -45,8 +61,13 @@
                     i--; 
                 }
             }
+            zahlen.sort((a, b) => a - b);
             
-            document.getElementById('zahlen').innerText = "Deine Lottozahlen: " + zahlen.join(' - ');
+            document.getElementById('zahlen').innerHTML = `
+                <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
+                <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
+                <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
+            `;
         }
     </script>
 </body>
