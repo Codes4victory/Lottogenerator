@@ -153,63 +153,53 @@
     <div id="lottoDatum"></div>
     
     <script>
-       function generiereLottoDatum() {
-    let name = document.getElementById('datumName').value.trim();
-    let geburtstag = document.getElementById('datumGeburtstag').value;
-    let geburtsort = document.getElementById('geburtsort').value.trim();
-
-    // Überprüfen, ob alle Felder ausgefüllt sind
-    if (!name || !geburtstag || !geburtsort) {
-        alert("Bitte fülle alle Felder aus!");
-        return;
-    }
-
-    let heute = new Date();
+       <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
     
-    // Finde den nächsten Mittwoch (3) oder Samstag (6)
-    while (heute.getDay() !== 3 && heute.getDay() !== 6) {
-        heute.setDate(heute.getDate() + 1);
-    }
-
-    // Ausgabe in deutschem Format
-    let lottoDatumText = heute.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-
-    // Ergebnis anzeigen
-    let lottoDatumDiv = document.getElementById('lottoDatum');
-    lottoDatumDiv.innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
-    lottoDatumDiv.style.opacity = '1';
-    lottoDatumDiv.style.transform = 'translateY(0)';
-}
-
-
-            
-            let seed = name.length + new Date(geburtstag).getTime() + zieher.length + new Date(zieherGeburt).getTime();
-            let zahlen = [];
-            
-            for (let i = 0; i < 6; i++) {
-                let zahl = (Math.abs(Math.sin(seed + i) * 49) + 1) | 0;
-                if (!zahlen.includes(zahl)) {
-                    zahlen.push(zahl);
-                } else {
-                    i--; 
-                }
-            }
-            zahlen.sort((a, b) => a - b);
-            
-            let zahlenDiv = document.getElementById('zahlen');
-            zahlenDiv.innerHTML = `<p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>`;
-            zahlenDiv.style.opacity = '1';
-            zahlenDiv.style.transform = 'translateY(0)';
-        }
-        
+    <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
+    <p>Basierend auf deinem Namen, Geburtsdatum und Geburtsort berechnen wir das ideale Datum zum Lottospielen!</p>
+    
+    <label for="datumName">Dein Name:</label>
+    <input type="text" id="datumName" placeholder="Max Mustermann">
+    
+    <label for="datumGeburtstag">Geburtsdatum:</label>
+    <input type="date" id="datumGeburtstag">
+    
+    <label for="geburtsort">Geburtsort:</label>
+    <input type="text" id="geburtsort" placeholder="München">
+    
+    <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
+    
+    <div id="lottoDatum"></div>
+    
+    <div class="disclaimer">
+        <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
+    </div>
+    
+    <script>
         function generiereLottoDatum() {
+            let name = document.getElementById('datumName').value.trim();
+            let geburtstag = document.getElementById('datumGeburtstag').value;
+            let geburtsort = document.getElementById('geburtsort').value.trim();
+
+            if (!name || !geburtstag || !geburtsort) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
+            }
+
             let heute = new Date();
             while (heute.getDay() !== 3 && heute.getDay() !== 6) {
                 heute.setDate(heute.getDate() + 1);
             }
-            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${heute.toDateString()}</p>`;
+
+            let lottoDatumText = heute.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+            
+            let lottoDatumDiv = document.getElementById('lottoDatum');
+            lottoDatumDiv.innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
+            lottoDatumDiv.style.opacity = '1';
+            lottoDatumDiv.style.transform = 'translateY(0)';
         }
     </script>
+
 </body>
 </html>
 <h2>📜 Über Kabbalistik und Zahlenmystik 📜</h2>
