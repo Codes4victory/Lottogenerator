@@ -98,11 +98,66 @@
 
     <script>
         function generiereZahlen() {
-            // ... (Code zum Generieren der Lottozahlen)
+            let name = document.getElementById('name').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+            let zieher = document.getElementById('zieher').value;
+            let zieherGeburt = document.getElementById('zieherGeburt').value;
+            let ort = document.getElementById('ort').value;
+            let zeit = document.getElementById('zeit').value;
+
+            if (!name || !geburtstag || !zieher || !zieherGeburt || !ort || !zeit) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
+            }
+
+            let seed = name.length + new Date(geburtstag).getTime() + zieher.length + new Date(zieherGeburt).getTime();
+            let zahlen = [];
+
+            while (zahlen.length < 6) {
+                let zahl = (Math.abs(Math.sin(seed++) * 49) + 1) | 0;
+                if (!zahlen.includes(zahl)) {
+                    zahlen.push(zahl);
+                }
+            }
+            zahlen.sort((a, b) => a - b);
+
+            let zahlenDiv = document.getElementById('zahlen');
+            zahlenDiv.innerHTML = `
+                <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
+                <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
+                <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
+            `;
+            zahlenDiv.style.opacity = '1';
+            zahlenDiv.style.transform = 'translateY(0)';
         }
 
         function generiereLottoDatum() {
-            // ... (Code zum Berechnen des Lotto-Datums)
+            let name = document.getElementById('name').value;
+            let geburtsort = document.getElementById('geburtsort').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+
+            if (!name || !geburtsort || !geburtstag) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
+            }
+
+            let seed = name.length + geburtsort.length + new Date(geburtstag).getTime();
+            let lottoDatum = new Date(2025, 0, 1);
+
+            while (lottoDatum.getDay() !== 3 && lottoDatum.getDay() !== 6) {
+                lottoDatum.setDate(lottoDatum.getDate() + 1);
+            }
+
+            lottoDatum.setDate(lottoDatum.getDate() + (seed % 365));
+
+            while (lottoDatum.getDay() !== 3 && lottoDatum.getDay() !== 6) {
+                lottoDatum.setDate(lottoDatum.getDate() + 1);
+            }
+
+            let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            let formatiertesDatum = lottoDatum.toLocaleDateString('de-DE', options);
+
+            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${formatiertesDatum}</p>`;
         }
     </script>
 </body>
