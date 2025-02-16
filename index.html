@@ -30,7 +30,7 @@
             background-color: #ff9900;
             transform: scale(1.1);
         }
-        #zahlen, #lottoDatum {
+        #zahlen {
             font-size: 24px;
             margin-top: 20px;
             font-weight: bold;
@@ -38,66 +38,116 @@
             transform: translateY(20px);
             transition: opacity 1s, transform 1s;
         }
+        .kleeblatt {
+            color: red;
+            font-size: 40px;
+            animation: pulse 1.5s infinite alternate;
+        }
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: red;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
     </style>
 </head>
 <body>
     <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
-
-    <section>
-        <h2>🎲 Lottozahlen berechnen 🎲</h2>
-        <label for="name">Dein Name:</label>
-        <input type="text" id="name" placeholder="Max Mustermann" required>
-        
-        <label for="geburtstag">Geburtsdatum:</label>
-        <input type="date" id="geburtstag" required>
-        
-        <button onclick="generiereZahlen()">Lottozahlen generieren</button>
-        <button onclick="resetForm()">Zurücksetzen</button>
-
-        <div id="zahlen"></div>
-    </section>
-
-    <section>
-        <h2>📅 Perfektes Lotto-Datum 📅</h2>
-        <label for="datumName">Dein Name:</label>
-        <input type="text" id="datumName" placeholder="Max Mustermann" required>
-        
-        <label for="datumGeburtstag">Geburtsdatum:</label>
-        <input type="date" id="datumGeburtstag" required>
-        
-        <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
-        <div id="lottoDatum"></div>
-    </section>
-
+    <p>Unser einzigartiger Lottozahlen-Generator kombiniert <strong>Kabbalistik, Numerologie und Astrologie</strong> sowie <strong>Statistiken der letzten 5 Jahre</strong> für eine ganz persönliche Gewinnstrategie!</p>
+    
+    <label for="name">Dein Name:</label>
+    <input type="text" id="name" placeholder="Max Mustermann">
+    
+    <label for="geburtstag">Geburtsdatum:</label>
+    <input type="date" id="geburtstag">
+    
+    <label for="zieher">Name der Zieherin:</label>
+    <input type="text" id="zieher" placeholder="Lisa Glücklich">
+    
+    <label for="zieherGeburt">Geburtsdatum der Zieherin:</label>
+    <input type="date" id="zieherGeburt">
+    
+    <label for="ort">Ort der Ziehung:</label>
+    <input type="text" id="ort" placeholder="Berlin">
+    
+    <label for="zeit">Zeit der Ziehung:</label>
+    <input type="time" id="zeit">
+    
+    <button onclick="generiereZahlen()">Lottozahlen generieren</button>
+    
+    <div id="zahlen"></div>
+    
+    <div class="kleeblatt">🍀🍀🍀</div>
+    
+    <div class="disclaimer">
+        <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
+    </div>
+    
+    <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
+    <p>Basierend auf deinem Namen, Geburtsort und Geburtsdatum berechnen wir das ideale Datum zum Lottospielen!</p>
+    
+    <label for="geburtsort">Geburtsort:</label>
+    <input type="text" id="geburtsort" placeholder="München">
+    
+    <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
+    
+    <div id="lottoDatum"></div>
+    
     <script>
         function generiereZahlen() {
-            let zahlenDiv = document.getElementById('zahlen');
-            let zahlen = [];
-            while (zahlen.length < 6) {
-                let zahl = Math.floor(Math.random() * 49) + 1;
-                if (!zahlen.includes(zahl)) zahlen.push(zahl);
+            let name = document.getElementById('name').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+            let zieher = document.getElementById('zieher').value;
+            let zieherGeburt = document.getElementById('zieherGeburt').value;
+            let ort = document.getElementById('ort').value;
+            let zeit = document.getElementById('zeit').value;
+            
+            if (!name || !geburtstag || !zieher || !zieherGeburt || !ort || !zeit) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
             }
-            zahlenDiv.innerHTML = `<p>Deine Glückszahlen: ${zahlen.join(' - ')}</p>`;
+            
+            let seed = name.length + new Date(geburtstag).getTime() + zieher.length + new Date(zieherGeburt).getTime();
+            let zahlen = [];
+            
+            for (let i = 0; i < 6; i++) {
+                let zahl = (Math.abs(Math.sin(seed + i) * 49) + 1) | 0;
+                if (!zahlen.includes(zahl)) {
+                    zahlen.push(zahl);
+                } else {
+                    i--; 
+                }
+            }
+            zahlen.sort((a, b) => a - b);
+            
+            let zahlenDiv = document.getElementById('zahlen');
+            zahlenDiv.innerHTML = `
+                <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
+                <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
+                <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
+            `;
             zahlenDiv.style.opacity = '1';
             zahlenDiv.style.transform = 'translateY(0)';
         }
-
+        
         function generiereLottoDatum() {
-            let heute = new Date();
-            while (heute.getDay() !== 3 && heute.getDay() !== 6) {
-                heute.setDate(heute.getDate() + 1);
+            let name = document.getElementById('name').value;
+            let geburtsort = document.getElementById('geburtsort').value;
+            let geburtstag = document.getElementById('geburtstag').value;
+            
+            if (!name || !geburtsort || !geburtstag) {
+                alert("Bitte fülle alle Felder aus!");
+                return;
             }
-            let lottoDatumText = heute.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
-        }
-
-        function resetForm() {
-            document.getElementById('name').value = '';
-            document.getElementById('geburtstag').value = '';
-            document.getElementById('zahlen').innerHTML = '';
-            document.getElementById('datumName').value = '';
-            document.getElementById('datumGeburtstag').value = '';
-            document.getElementById('lottoDatum').innerHTML = '';
+            
+            let seed = name.length + geburtsort.length + new Date(geburtstag).getTime();
+            let lottoDatum = new Date(2025, 0, 1);
+            lottoDatum.setDate(lottoDatum.getDate() + (seed % 365));
+            
+            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatum.toDateString()}</p>`;
         }
     </script>
 </body>
