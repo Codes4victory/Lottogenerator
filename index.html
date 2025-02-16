@@ -30,7 +30,7 @@
             background-color: #ff9900;
             transform: scale(1.1);
         }
-        #zahlen {
+        #zahlen, #lottoDatum {
             font-size: 24px;
             margin-top: 20px;
             font-weight: bold;
@@ -87,7 +87,13 @@
     </div>
     
     <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
-    <p>Basierend auf deinem Namen, Geburtsort und Geburtsdatum berechnen wir das ideale Datum zum Lottospielen!</p>
+    <p>Basierend auf deinem Namen, Geburtsdatum und Geburtsort berechnen wir das ideale Datum zum Lottospielen!</p>
+    
+    <label for="datumName">Dein Name:</label>
+    <input type="text" id="datumName" placeholder="Max Mustermann">
+    
+    <label for="datumGeburtstag">Geburtsdatum:</label>
+    <input type="date" id="datumGeburtstag">
     
     <label for="geburtsort">Geburtsort:</label>
     <input type="text" id="geburtsort" placeholder="München">
@@ -124,21 +130,17 @@
             zahlen.sort((a, b) => a - b);
             
             let zahlenDiv = document.getElementById('zahlen');
-            zahlenDiv.innerHTML = `
-                <p><strong>Ziehung in:</strong> ${ort} um ${zeit}</p>
-                <p><strong>Zieherin:</strong> ${zieher} (geb. ${zieherGeburt})</p>
-                <p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>
-            `;
+            zahlenDiv.innerHTML = `<p><strong>Deine magischen Lottozahlen:</strong> ${zahlen.join(' - ')}</p>`;
             zahlenDiv.style.opacity = '1';
             zahlenDiv.style.transform = 'translateY(0)';
         }
         
         function generiereLottoDatum() {
-            let name = document.getElementById('name').value;
+            let name = document.getElementById('datumName').value;
+            let geburtstag = document.getElementById('datumGeburtstag').value;
             let geburtsort = document.getElementById('geburtsort').value;
-            let geburtstag = document.getElementById('geburtstag').value;
             
-            if (!name || !geburtsort || !geburtstag) {
+            if (!name || !geburtstag || !geburtsort) {
                 alert("Bitte fülle alle Felder aus!");
                 return;
             }
