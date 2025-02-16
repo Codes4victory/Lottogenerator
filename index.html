@@ -38,169 +38,67 @@
             transform: translateY(20px);
             transition: opacity 1s, transform 1s;
         }
-        .kleeblatt {
-            color: red;
-            font-size: 40px;
-            animation: pulse 1.5s infinite alternate;
-        }
-        .disclaimer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: red;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
-        }
     </style>
 </head>
 <body>
     <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
-    <p>Unser einzigartiger Lottozahlen-Generator kombiniert <strong>Kabbalistik, Numerologie und Astrologie</strong> sowie <strong>Statistiken der letzten 5 Jahre</strong> für eine ganz persönliche Gewinnstrategie!</p>
-    
-    <label for="name">Dein Name:</label>
-    <input type="text" id="name" placeholder="Max Mustermann">
-    
-    <label for="geburtstag">Geburtsdatum:</label>
-    <input type="date" id="geburtstag">
-    
-    <label for="zieher">Name der Zieherin:</label>
-    <input type="text" id="zieher" placeholder="Lisa Glücklich">
-    
-    <label for="zieherGeburt">Geburtsdatum der Zieherin:</label>
-    <input type="date" id="zieherGeburt">
-    
-    <label for="ort">Ort der Ziehung:</label>
-    <input type="text" id="ort" placeholder="Berlin">
-    
-    <label for="zeit">Zeit der Ziehung:</label>
-    <input type="time" id="zeit">
-    
-    <button onclick="generiereZahlen()">Lottozahlen generieren</button>
-    
-    <div id="zahlen"></div>
-    <div id="kalenderContainer">
-    <h2>📅 Lotto-Kalender 📅</h2>
-    <div id="kalender"></div>
-</div>
 
-<script>
-    function erstelleKalender(jahr, monat) {
-        let kalenderDiv = document.getElementById('kalender');
-        kalenderDiv.innerHTML = ''; 
-        let tageImMonat = new Date(jahr, monat + 1, 0).getDate();
-        let ersterTag = new Date(jahr, monat, 1).getDay();
+    <section>
+        <h2>🎲 Lottozahlen berechnen 🎲</h2>
+        <label for="name">Dein Name:</label>
+        <input type="text" id="name" placeholder="Max Mustermann" required>
         
-        let table = document.createElement('table');
-        table.border = "1";
-        let headerRow = table.insertRow();
-        let tage = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+        <label for="geburtstag">Geburtsdatum:</label>
+        <input type="date" id="geburtstag" required>
         
-        tage.forEach(tag => {
-            let th = document.createElement('th');
-            th.innerText = tag;
-            headerRow.appendChild(th);
-        });
+        <button onclick="generiereZahlen()">Lottozahlen generieren</button>
+        <button onclick="resetForm()">Zurücksetzen</button>
 
-        let row = table.insertRow();
-        for (let i = 0; i < ersterTag; i++) {
-            row.insertCell();
+        <div id="zahlen"></div>
+    </section>
+
+    <section>
+        <h2>📅 Perfektes Lotto-Datum 📅</h2>
+        <label for="datumName">Dein Name:</label>
+        <input type="text" id="datumName" placeholder="Max Mustermann" required>
+        
+        <label for="datumGeburtstag">Geburtsdatum:</label>
+        <input type="date" id="datumGeburtstag" required>
+        
+        <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
+        <div id="lottoDatum"></div>
+    </section>
+
+    <script>
+        function generiereZahlen() {
+            let zahlenDiv = document.getElementById('zahlen');
+            let zahlen = [];
+            while (zahlen.length < 6) {
+                let zahl = Math.floor(Math.random() * 49) + 1;
+                if (!zahlen.includes(zahl)) zahlen.push(zahl);
+            }
+            zahlenDiv.innerHTML = `<p>Deine Glückszahlen: ${zahlen.join(' - ')}</p>`;
+            zahlenDiv.style.opacity = '1';
+            zahlenDiv.style.transform = 'translateY(0)';
         }
 
-        for (let tag = 1; tag <= tageImMonat; tag++) {
-            if (row.cells.length === 7) {
-                row = table.insertRow();
-            }
-
-            let cell = row.insertCell();
-            cell.innerText = tag;
-            let aktuellesDatum = new Date(jahr, monat, tag);
-            
-            if (aktuellesDatum.getDay() === 3 || aktuellesDatum.getDay() === 6) {
-                cell.style.backgroundColor = "#ffcc00"; 
-                cell.style.fontWeight = "bold";
-                cell.style.cursor = "pointer";
-            }
-        }
-
-        kalenderDiv.appendChild(table);
-    }
-
-    let heute = new Date();
-    erstelleKalender(heute.getFullYear(), heute.getMonth());
-</script>
-
-    <div class="kleeblatt">🍀🍀🍀</div>
-    
-    <div class="disclaimer">
-        <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
-    </div>
-    
-    <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
-    <p>Basierend auf deinem Namen, Geburtsdatum und Geburtsort berechnen wir das ideale Datum zum Lottospielen!</p>
-    
-    <label for="datumName">Dein Name:</label>
-    <input type="text" id="datumName" placeholder="Max Mustermann">
-    
-    <label for="datumGeburtstag">Geburtsdatum:</label>
-    <input type="date" id="datumGeburtstag">
-    
-    <label for="geburtsort">Geburtsort:</label>
-    <input type="text" id="geburtsort" placeholder="München">
-    
-    <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
-    
-    <div id="lottoDatum"></div>
-    
-    <script>
-       <h1>🍀 Magischer Lottozahlen-Generator 🍀</h1>
-    
-    <h2>🎯 Dein perfektes Lotto-Datum 🎯</h2>
-    <p>Basierend auf deinem Namen, Geburtsdatum und Geburtsort berechnen wir das ideale Datum zum Lottospielen!</p>
-    
-    <label for="datumName">Dein Name:</label>
-    <input type="text" id="datumName" placeholder="Max Mustermann">
-    
-    <label for="datumGeburtstag">Geburtsdatum:</label>
-    <input type="date" id="datumGeburtstag">
-    
-    <label for="geburtsort">Geburtsort:</label>
-    <input type="text" id="geburtsort" placeholder="München">
-    
-    <button onclick="generiereLottoDatum()">Perfektes Lotto-Datum berechnen</button>
-    
-    <div id="lottoDatum"></div>
-    
-    <div class="disclaimer">
-        <p><strong>Hinweis:</strong> Dies ist ein Unterhaltungsangebot. Alle Angaben sind ohne Gewähr. Der Rechtsweg ist ausgeschlossen.</p>
-    </div>
-    
-    <script>
         function generiereLottoDatum() {
-            let name = document.getElementById('datumName').value.trim();
-            let geburtstag = document.getElementById('datumGeburtstag').value;
-            let geburtsort = document.getElementById('geburtsort').value.trim();
-
-            if (!name || !geburtstag || !geburtsort) {
-                alert("Bitte fülle alle Felder aus!");
-                return;
-            }
-
             let heute = new Date();
             while (heute.getDay() !== 3 && heute.getDay() !== 6) {
                 heute.setDate(heute.getDate() + 1);
             }
-
             let lottoDatumText = heute.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-            
-            let lottoDatumDiv = document.getElementById('lottoDatum');
-            lottoDatumDiv.innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
-            lottoDatumDiv.style.opacity = '1';
-            lottoDatumDiv.style.transform = 'translateY(0)';
+            document.getElementById('lottoDatum').innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
+        }
+
+        function resetForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('geburtstag').value = '';
+            document.getElementById('zahlen').innerHTML = '';
+            document.getElementById('datumName').value = '';
+            document.getElementById('datumGeburtstag').value = '';
+            document.getElementById('lottoDatum').innerHTML = '';
         }
     </script>
-
 </body>
 </html>
-<h2>📜 Über Kabbalistik und Zahlenmystik 📜</h2>
-    <p>Kabbalistik und Zahlenmystik sind ernstzunehmende Wissenschaften, die seit Jahrtausenden von zahlreichen Kulturen genutzt werden. Noch heute wenden jüdische Gelehrte erfolgreich kabbalistische Prinzipien an, um tiefere Einsichten in die verborgenen Bedeutungen von Zahlen zu gewinnen.</p>
