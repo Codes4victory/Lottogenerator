@@ -153,11 +153,12 @@
     <div id="lottoDatum"></div>
     
     <script>
-        function generiereLottoDatum() {
-    let name = document.getElementById('datumName').value;
+       function generiereLottoDatum() {
+    let name = document.getElementById('datumName').value.trim();
     let geburtstag = document.getElementById('datumGeburtstag').value;
-    let geburtsort = document.getElementById('geburtsort').value;
+    let geburtsort = document.getElementById('geburtsort').value.trim();
 
+    // Überprüfen, ob alle Felder ausgefüllt sind
     if (!name || !geburtstag || !geburtsort) {
         alert("Bitte fülle alle Felder aus!");
         return;
@@ -165,17 +166,21 @@
 
     let heute = new Date();
     
-    // Suche das nächste Lotto-Datum (Mittwoch oder Samstag)
+    // Finde den nächsten Mittwoch (3) oder Samstag (6)
     while (heute.getDay() !== 3 && heute.getDay() !== 6) {
         heute.setDate(heute.getDate() + 1);
     }
 
-    document.getElementById('lottoDatum').innerHTML = 
-        `<p><strong>Dein perfektes Lotto-Datum:</strong> ${heute.toLocaleDateString('de-DE')}</p>`;
+    // Ausgabe in deutschem Format
+    let lottoDatumText = heute.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
 
-    document.getElementById('lottoDatum').style.opacity = '1';
-    document.getElementById('lottoDatum').style.transform = 'translateY(0)';
+    // Ergebnis anzeigen
+    let lottoDatumDiv = document.getElementById('lottoDatum');
+    lottoDatumDiv.innerHTML = `<p><strong>Dein perfektes Lotto-Datum:</strong> ${lottoDatumText}</p>`;
+    lottoDatumDiv.style.opacity = '1';
+    lottoDatumDiv.style.transform = 'translateY(0)';
 }
+
 
             
             let seed = name.length + new Date(geburtstag).getTime() + zieher.length + new Date(zieherGeburt).getTime();
